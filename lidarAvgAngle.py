@@ -53,6 +53,9 @@ try:
             lAvg1,lAvg2,lAvg3,lAvg4,lAvg5,lAvg6,lAvg7,lAvg8,lAvg9,lAvg10 = (0 for i in range(10))
             rAvg1,rAvg2,rAvg3,rAvg4,rAvg5,rAvg6,rAvg7,rAvg8,rAvg9,rAvg10 = (0 for i in range(10))
             
+            #TODO need to have list for angles
+            
+         
             for (_, angle, distance) in scan:
                 #Left
                 #L1
@@ -152,6 +155,7 @@ try:
                     
                     
             #creating distance list and (empty) average variable touples
+            #TODO: put list of angles instead of "lAvg1"
             main.extend(((lList1,lAvg1),
                          (lList2,lAvg2),
                          (lList3,lAvg3),
