@@ -1,3 +1,7 @@
+#found code from github.com/SkoltechRobotics/rplidar
+#used to check if lidar was working and check directionals
+#  of robot relative to angle lidar was reading
+
 #!/usr/bin/env python3
 '''Animates distances and measurment quality'''
 from rplidar import RPLidar
