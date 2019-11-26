@@ -9,7 +9,7 @@ lidar = RPLidar('/dev/ttyUSB0')
 #for threading(if needed)
 import threading
 
-distanceConst = 500
+distanceConst = 400
 
 def avgList(avg, *args):
     if avg[0] != []:
@@ -35,7 +35,6 @@ def getThresh(ang, *args):
         midAngle = abs(base - midAngle)
         threshold = dist/math.cos(math.radians(midAngle))
         return threshold
-        
 
 def printSame(num, check, limit):
     x=0
@@ -61,9 +60,6 @@ def printSame(num, check, limit):
             print(" ")
     return x
 
-        
-        
-    
 
 
 try:
@@ -74,7 +70,7 @@ try:
             fList1,fList2,fList3,fList4,fList5,fList6,fList7,fList8,fList9,fList10 = ([] for i in range(10))
             lList1,lList2,lList3,lList4,lList5,lList6,lList7,lList8,lList9,lList10 = ([] for i in range(10))
             rList1,rList2,rList3,rList4,rList5,rList6,rList7,rList8,rList9,rList10 = ([] for i in range(10))
-            
+
             #setting up average variables while clearing every iteration
             fAvg1,fAvg2,fAvg3,fAvg4,fAvg5,fAvg6,fAvg7,fAvg8,fAvg9,fAvg10 = (0 for i in range(10))
             lAvg1,lAvg2,lAvg3,lAvg4,lAvg5,lAvg6,lAvg7,lAvg8,lAvg9,lAvg10 = (0 for i in range(10))
@@ -268,8 +264,7 @@ try:
                         mListRight.append(printSame(avgDist,endLine,thresh))
             #TODO: designate what the motors should given anything.
             #the function below will do that
-            #dcmotors.decide(mListLeft,mListFront,mListRight)
-            dcmotors.straight()
+            dcmotors.decide(mListLeft,mListFront,mListRight)
 except KeyboardInterrupt:
     lidar.stop()
     lidar.stop_motor()

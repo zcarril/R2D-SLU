@@ -1,4 +1,4 @@
-import RPi.GPIO as GPIO          
+import RPi.GPIO as GPIO
 from time import sleep
 
 #initializing motors
@@ -32,9 +32,63 @@ pTemp2 = 80
 p.start(pTemp)
 p2.start(pTemp)
 
+#SIDE NOTE/ LEGEND
+# p = right
+# p2 = left
 
-   
+#correct
+def turnLeft():
+    pTemp = 99
+    pTemp2 = 0
+    p.ChangeDutyCycle(pTemp)
+    p2.ChangeDutyCycle(pTemp2)
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+    GPIO.output(in3,GPIO.HIGH)
+    GPIO.output(in4,GPIO.LOW)
+
+
 def straight():
+    GPIO.output(in1,GPIO.HIGH)
+    GPIO.output(in2,GPIO.LOW)
+    GPIO.output(in3,GPIO.HIGH)
+    GPIO.output(in4,GPIO.LOW)
+
+def flipItAndReverseIt(frontLeft,frontRight):
+    if frontLeft == True and frontRight == False:
+        pTemp = 99
+        pTemp2 = 0
+        p.ChangeDutyCycle(pTemp)
+        p2.ChangeDutyCycle(pTemp2)
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+    elif frontLeft == False and frontRight == True:
+        pTemp = 0
+        pTemp2 = 99
+        p.ChangeDutyCycle(pTemp)
+        p2.ChangeDutyCycle(pTemp2)
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+    elif frontLeft ==True and frontRight == True:
+        pTemp = 60
+        pTemp2 = 99
+        p.ChangeDutyCycle(pTemp)
+        p2.ChangeDutyCycle(pTemp2)
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.LOW)
+        GPIO.output(in4,GPIO.HIGH)
+
+
+def modifyDirection(leftCorrection,rightCorrection):
+    pTemp = 99 - (leftCorrection*4)
+    pTemp2 = 99 - (rightCorrection*4)
+    p.ChangeDutyCycle(pTemp)
+    p2.ChangeDutyCycle(pTemp2)
     GPIO.output(in1,GPIO.HIGH)
     GPIO.output(in2,GPIO.LOW)
     GPIO.output(in3,GPIO.HIGH)
@@ -43,10 +97,25 @@ def straight():
 #this needs to tell the motors what to do
 #given triggers from the left, front, and right list
 def decide(leftList,frontList,rightList):
-#     print("left: "+ str(leftList))
-#     print("front: " +  str(frontList))
-#     print("right: " + str(rightList))
-    print("this does nothing rn")
+    lSum = sum(leftList)
+    rSum = sum(rightList)
+    lFront = []
+    rFront = []
+    if sum(frontList) != 0:
+        for i in range(int(len(frontList)/2)):
+            lFront.append(frontList[i])
+        for j in range((int(len(frontList)/2)),(len(frontList)),1):
+            rFront.append(frontList[j])
+        if sum(lFront) == 0:
+            if sum(rFront) != 0:
+                flipItAndReverseIt(True,False)
+        elif sum(rFront) == 0:
+            if sum(lFront) != 0:
+                flipItAndReverseIt(False,True)
+        elif sum(lFront) != 0 and sum(rFront) != 0:
+            flipItAndReverseIt(True,True)
+    else:
+        modifyDirection(lSum,rSum)
 
 def clean():
     GPIO.cleanup()
