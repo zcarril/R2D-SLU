@@ -39,7 +39,7 @@ def getThresh(ang, *args):
 def printSame(num, check, limit):
     x=0
     dConstMedium = limit
-    dConstClose = limit-300
+    dConstClose = limit-100
     if check == False:
         if num < dConstClose:
             x=2
