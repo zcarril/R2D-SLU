@@ -282,8 +282,9 @@ try:
                 #print (angle)
                 if angle is not None:
                     if dist is not None:
-                        if (angle > 155 and angle < 205) and (dist > 300 and dist < 1000):
-                            targetCount += 1
+                        if (angle > 150 and angle < 210) and (dist > 500 and dist < 1000):
+#                             targetCount += 1
+#                             print (dist)
                             if 180-angle < 0:
                                 print("on the right")
                                 temp1 = 90 - 3*(abs(180-angle))
@@ -296,10 +297,10 @@ try:
                             targetCount -= 1
                                     
                         dcFollow.decide(mListLeft,mListFront,mListRight,dist, angle)
-            print (targetCount)    
+         #   print (targetCount)    
             if targetCount <= -30:
                 dcFollow.motors(0,0,True)
-                print("LOST")
+             #   print("LOST")
 
 except KeyboardInterrupt:
     lidar.stop()
