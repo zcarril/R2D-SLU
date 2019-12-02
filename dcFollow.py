@@ -36,7 +36,7 @@ p2.start(pTemp)
 # p = right
 # p2 = left
 
-
+#TODO add opposite directions the other way
 def motors(pT1, pT2, sameDirection):
     p.ChangeDutyCycle(pT1)
     p2.ChangeDutyCycle(pT2)

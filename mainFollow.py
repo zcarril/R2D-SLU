@@ -272,35 +272,43 @@ try:
                     else:
                         endLine = True
                         mListRight.append(printSame(avgDist,endLine,thresh))
+            #    print (str(mListLeft) +"\n"+ str(mListFront) +"\n" +str(mListRight))
             #TODO: designate what the motors should given anything.
             #the function below will do that
             
             for i in range(len(main)):
-                
                 angle = getAvgAngle(main[i]) #get angle here
                 dist = avgList(main[i])
-                #print (angle)
+               # print (angle)
                 if angle is not None:
                     if dist is not None:
-                        if (angle > 150 and angle < 210) and (dist > 500 and dist < 1000):
-#                             targetCount += 1
-#                             print (dist)
-                            if 180-angle < 0:
-                                print("on the right")
-                                temp1 = 90 - 3*(abs(180-angle))
-                                dcFollow.motors(temp1,90,True)
-                            elif 180-angle > 0:
-                                print("on the left")
-                                temp2 = 90 - 3*(abs(180-angle))
-                                dcFollow.motors(90,temp2,True)
+                        #add 135-150 and 210-225 wheels turn in opposite direction. 
+                        if (angle > 150 and angle < 210) and (dist > 500 and dist < 1200):
+                            #targetCount += 1
+                            
+                            if 180-angle <= 0:
+                                print("on the right: " + str(angle))
+                                temp1 = 90 - 4*(abs(180-angle))
+                                if temp1 < 0:
+                                    temp1 = 0
+                                for i in range(10):
+                                    dcFollow.motors(temp1,90,True)
+                                print("temp1: " + str(temp1))
+                            elif 180-angle >= 0:
+                                print("on the left: " + str(angle))
+                                temp2 = 90 - 4*(abs(180-angle))
+                                if temp2 < 0:
+                                    temp2 = 0
+                                for i in range(10):
+                                    dcFollow.motors(90,temp2,True)
+                                print("temp2: " + str(temp2))
                         else:
-                            targetCount -= 1
-                                    
+                            targetCount -= 1            
                         dcFollow.decide(mListLeft,mListFront,mListRight,dist, angle)
-         #   print (targetCount)    
+            #print (targetCount)    
             if targetCount <= -30:
                 dcFollow.motors(0,0,True)
-             #   print("LOST")
+                print("LOST")
 
 except KeyboardInterrupt:
     lidar.stop()
