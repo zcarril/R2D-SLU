@@ -35,7 +35,9 @@ p2.start(pTemp)
 #SIDE NOTE/ LEGEND
 # p = right
 # p2 = left
-
+global gCheck
+global gCount
+gCount = 10000
 
 def straight():
     pTemp = 99
@@ -90,26 +92,29 @@ def modifyDirection(leftCorrection,rightCorrection):
 #following stuff
 def follow (dist, angle):
     dConst = 0
-    count = 10000
     if angle is not None:
         if dist is not None:
             if angle < 200 and angle > 160:
                 if dist < 800 and dist > 500:
                     dConst = dist
+                    #set var here
                     if angle < 175:
                         while (count > 0):
                             flipItAndReverseIt( True,False)
-                            count -= 1
+                            check -= 1
+                    #set var here
                     elif angle > 185:
                         while (count > 0):
                             flipItAndReverseIt( False,True)
-                            count -= 1
+                            check -= 1
+                    #set var here
                     else:
                         while (count > 0):
                             straight()
-                            count -= 1
+                            check -= 1
                 else:
                     flipItAndReverseIt(True,True)
+            #set if var cleared
             else:
                 pTemp = 0
                 pTemp2 = 0
@@ -155,7 +160,39 @@ def decide(leftList,frontList,rightList, dist, angle):
                 modifyDirection(lSum,rSum)
         followBool = False
     elif followBool:
-        follow(dist, angle)
+        #globalCheck = follow(dist, angle)
+        dConst = 0
+        if angle is not None:
+            if dist is not None:
+                if angle < 200 and angle > 160:
+                    if dist < 800 and dist > 500:
+                        dConst = dist
+                        #set var here for left (l)
+                        if angle < 175 or gCheck == "l":
+                            gCheck = "l"
+                            flipItAndReverseIt( True,False)
+                        #set var here for right (r)
+                        elif angle > 185 or gCheck == "r":
+                            gCheck = "r"
+                            flipItAndReverseIt( False,True)
+                        #set var here for straight (s)
+                        else:
+                            straight()
+                            check -= 1
+                    elif gCount > 0:
+                        flipItAndReverseIt(True,True)
+                        gCount -= 1
+                        gCheck = ""
+                #set if var cleared
+                else:
+                    pTemp = 0
+                    pTemp2 = 0
+                    p.ChangeDutyCycle(pTemp)
+                    p2.ChangeDutyCycle(pTemp2)
+                    GPIO.output(in1,GPIO.HIGH)
+                    GPIO.output(in2,GPIO.LOW)
+                    GPIO.output(in3,GPIO.HIGH)
+                    GPIO.output(in4,GPIO.LOW)
 
 def clean():
     GPIO.cleanup()
