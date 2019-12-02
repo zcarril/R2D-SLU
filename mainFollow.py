@@ -9,7 +9,8 @@ lidar = RPLidar('/dev/ttyUSB0')
 #for threading(if needed)
 import threading
 from operator import itemgetter
-
+temp1 = 0
+temp2 = 0
 distanceConst = 400
 
 def avgList(avg, *args):
@@ -92,7 +93,7 @@ try:
             
             #new list of triggers to motors
             mListLeft,mListFront,mListRight=([] for i in range(3))
-            
+            targetCount = 0
             for (_, angle, distance) in scan:
                 #Left
                 #L1
@@ -273,10 +274,33 @@ try:
                         mListRight.append(printSame(avgDist,endLine,thresh))
             #TODO: designate what the motors should given anything.
             #the function below will do that
+            
             for i in range(len(main)):
+                
                 angle = getAvgAngle(main[i]) #get angle here
                 dist = avgList(main[i])
-                dcFollow.decide(mListLeft,mListFront,mListRight,dist, angle)
+                #print (angle)
+                if angle is not None:
+                    if dist is not None:
+                        if (angle > 155 and angle < 205) and (dist > 300 and dist < 1000):
+                            targetCount += 1
+                            if 180-angle < 0:
+                                print("on the right")
+                                temp1 = 90 - 3*(abs(180-angle))
+                                dcFollow.motors(temp1,90,True)
+                            elif 180-angle > 0:
+                                print("on the left")
+                                temp2 = 90 - 3*(abs(180-angle))
+                                dcFollow.motors(90,temp2,True)
+                        else:
+                            targetCount -= 1
+                                    
+                        dcFollow.decide(mListLeft,mListFront,mListRight,dist, angle)
+            print (targetCount)    
+            if targetCount <= -30:
+                dcFollow.motors(0,0,True)
+                print("LOST")
+
 except KeyboardInterrupt:
     lidar.stop()
     lidar.stop_motor()
