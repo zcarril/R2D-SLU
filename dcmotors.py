@@ -36,55 +36,36 @@ p2.start(pTemp)
 # p = right
 # p2 = left
 
-
+def motors(pT1, p2, sameDirection):
+    p.ChangeDutyCycle(pT1)
+    p2.ChangeDutyCycle(pT2)
+    if sameDirection == True:
+        GPIO.output(in1,GPIO.HIGH)
+        GPIO.output(in2,GPIO.LOW)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW) 
+    else:
+        GPIO.output(in1,GPIO.LOW)
+        GPIO.output(in2,GPIO.HIGH)
+        GPIO.output(in3,GPIO.HIGH)
+        GPIO.output(in4,GPIO.LOW)
+        
 def straight():
-    pTemp = 99
-    p.ChangeDutyCycle(pTemp)
-    p2.ChangeDutyCycle(pTemp)
-    GPIO.output(in1,GPIO.HIGH)
-    GPIO.output(in2,GPIO.LOW)
-    GPIO.output(in3,GPIO.HIGH)
-    GPIO.output(in4,GPIO.LOW)
+    motors(99,99,True)
 
 def flipItAndReverseIt(frontLeft,frontRight):
     if frontLeft == True and frontRight == False:
-        pTemp = 90
-        pTemp2 = 0
-        p.ChangeDutyCycle(pTemp)
-        p2.ChangeDutyCycle(pTemp2)
-        GPIO.output(in1,GPIO.HIGH)
-        GPIO.output(in2,GPIO.LOW)
-        GPIO.output(in3,GPIO.HIGH)
-        GPIO.output(in4,GPIO.LOW)
+        motors(90,60,True)
     elif frontLeft == False and frontRight == True:
-        pTemp = 0
-        pTemp2 = 90
-        p.ChangeDutyCycle(pTemp)
-        p2.ChangeDutyCycle(pTemp2)
-        GPIO.output(in1,GPIO.HIGH)
-        GPIO.output(in2,GPIO.LOW)
-        GPIO.output(in3,GPIO.HIGH)
-        GPIO.output(in4,GPIO.LOW)
+        motors(60,90,True)
     elif frontLeft ==True and frontRight == True:
-        pTemp = 99
-        pTemp2 = 60
-        p.ChangeDutyCycle(pTemp)
-        p2.ChangeDutyCycle(pTemp2)
-        GPIO.output(in1,GPIO.LOW)
-        GPIO.output(in2,GPIO.HIGH)
-        GPIO.output(in3,GPIO.LOW)
-        GPIO.output(in4,GPIO.HIGH)
+        motors(60,60,False)
 
 
 def modifyDirection(leftCorrection,rightCorrection):
     pTemp = 99 - (leftCorrection*3)
     pTemp2 = 99 - (rightCorrection*3)
-    p.ChangeDutyCycle(pTemp)
-    p2.ChangeDutyCycle(pTemp2)
-    GPIO.output(in1,GPIO.HIGH)
-    GPIO.output(in2,GPIO.LOW)
-    GPIO.output(in3,GPIO.HIGH)
-    GPIO.output(in4,GPIO.LOW)
+    motors(pTemp,pTemp2,True)
 
 #this needs to tell the motors what to do
 #given triggers from the left, front, and right list
