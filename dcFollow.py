@@ -77,8 +77,11 @@ def decide(leftList,frontList,rightList, dist, angle):
     rSum = sum(rightList)
     lFront = []
     rFront = []
-                
-    if (sum(leftList) + sum(rightList) > 0) and sum(frontList) < 10:
+    
+    #removing analysis of front angles bc following needs to happen instead of avoidance            
+    #if (sum(leftList) + sum(rightList) > 0) and sum(frontList) < 10:
+    #print("Side avoidance count: " + str(sum(leftList) + sum(rightList)))
+    if (sum(leftList) + sum(rightList) > 5):
         for i in range(len(leftList)):
             if leftList[i] == 2:
                 modifyDirection(lSum,rSum)
