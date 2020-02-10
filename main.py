@@ -213,7 +213,6 @@ try:
                     
                     
             #creating distance list and (empty) average variable touples
-            #TODO: put list of angles instead of "lAvg1"
             main.extend(((lList1,lAng1),
                          (lList2,lAng2),
                          (lList3,lAng3),
@@ -262,12 +261,11 @@ try:
                     else:
                         endLine = True
                         mListRight.append(printSame(avgDist,endLine,thresh))
-            #TODO: designate what the motors should given anything.
-            #the function below will do that
+            #dcmotors.py will successfully and actively avoid everything
             dcmotors.decide(mListLeft,mListFront,mListRight)
 except KeyboardInterrupt:
     lidar.stop()
     lidar.stop_motor()
     lidar.disconnect()
     dcmotors.clean()
-    print("YOU DIED")
+    print("YOU DIED, SUCCESSFULLY.")
