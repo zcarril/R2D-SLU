@@ -286,11 +286,11 @@ try:
 #                             targetCount += 1
 #                             print (dist)
                             if 180-angle < 0:
-                                print("on the right")
+                                #print("on the right")
                                 temp1 = 90 - 3*(abs(180-angle))
                                 dcFollow.motors(temp1,90,True)
                             elif 180-angle > 0:
-                                print("on the left")
+                                #print("on the left")
                                 temp2 = 90 - 3*(abs(180-angle))
                                 dcFollow.motors(90,temp2,True)
                         else:
@@ -307,4 +307,4 @@ except KeyboardInterrupt:
     lidar.stop_motor()
     lidar.disconnect()
     dcFollow.clean()
-    print("YOU DIED")
+    print("YOU DIED, SUCCESSFULLY.")
