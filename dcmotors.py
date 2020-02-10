@@ -36,6 +36,11 @@ p2.start(pTemp)
 # p = right
 # p2 = left
 
+#When facing right:
+    #LEFT TURN: (++,--)
+#When facing left:
+    #RIGHT TURN: (--,++)
+
 def motors(pT1, pT2, sameDirection):
     p.ChangeDutyCycle(pT1)
     p2.ChangeDutyCycle(pT2)
