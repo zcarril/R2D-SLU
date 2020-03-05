@@ -15,7 +15,7 @@ m2 = 23
 #5V pins 2 & 4 --> go to 5V on driver
 
 
-GPIO.setmode(GPIO.BOARD)   # Numbers pins by physical location
+GPIO.setmode(GPIO.BCM)   # Numbers pins by physical location
 GPIO.setup(m1, GPIO.OUT)   # Set pin mode as output
 GPIO.output(m1, GPIO.LOW)  # Set pin to low(0V)
 GPIO.setup(m2, GPIO.OUT)   # Set pin mode as output
@@ -32,17 +32,20 @@ p2.start(50)
 try:
         print('start')
         while True:
-                for dc in range(100, -1, -10):    # Decrease duty cycle: 100~0
-                        p.ChangeDutyCycle(dc)     # Change duty cycle
-                        p2.ChangeDutyCycle(dc)
-                        print('Duty Cycle = ', dc)
-                        time.sleep(5)
+#                 for dc in range(100, -1, -1):    # Decrease duty cycle: 100~0
+#                         p.ChangeDutyCycle(dc)     # Change duty cycle
+#                         p2.ChangeDutyCycle(dc)
+#                         print('Duty Cycle = ', dc)
+#                         time.sleep(0.25)
+                x=int(input("Duty Cycle: "))
+                p.ChangeDutyCycle(x)     # Change duty cycle
+                p2.ChangeDutyCycle(x)
         p.stop()
         GPIO.output(m1, GPIO.HIGH)    # turn off all leds
              
 except KeyboardInterrupt:
         p.stop()
-        GPIO.output(LedPin, GPIO.HIGH)    # turn off all leds
+        GPIO.output(m1, GPIO.HIGH)    # turn off all leds
         p2.stop()
         GPIO.output(m2, GPIO.HIGH)    # turn off all leds
         GPIO.cleanup()
