@@ -3,11 +3,11 @@ lidar = RPLidar('/dev/ttyUSB0')
 
 
 while(1):
-	for scan in lidar.iter_scans():
-		for (_, angle, distance) in scan:
-			#print (str(angle) + " "+ str(distance)+"\n")
-			if angle < 181 and angle > 179:
-				print (distance)
+    for scan in lidar.iter_scans():
+        for (_, angle, distance) in scan:
+            #print (str(angle) + " "+ str(distance)+"\n")
+            if angle < 181 and angle > 179:
+                print(distance)
 
 
 """
